@@ -4,8 +4,6 @@ use rand::distributions::{Distribution, Uniform};
 use std::cmp;
 mod statistics;
 
-use crate::statistics::DataSet;
-
 struct D20<T: Distribution<u8>> {
     rng: rand::rngs::ThreadRng,
     d20: T,
@@ -77,18 +75,7 @@ fn main() {
         let winner = results.iter().max_by(|(_, x), (_, y)| x.cmp(y)).unwrap();
         print!("Winner is {:?}", winner);
         println!("");
-
-        println!("------------------------------");
-
-        let single_roll_set = DataSet::new((0..10_000).map(|_| {
-            d20.roll()
-        }).collect::<Vec<u8>>());
-        let adv_of_dis_set = DataSet::new((0..10_000).map(|_| {
-            d20.roll_advantage_of_disadvantage()
-        }).collect::<Vec<u8>>());
-        let dis_of_adv_set = DataSet::new((0..10_000).map(|_| {
-            d20.roll_disadvantage_of_advantage()
-        }).collect::<Vec<u8>>());
-        println!("Mean: {:?}, Standard Deviation: {:?}", single_roll_set.mean, single_roll_set.std_deviation)
     }
 }
+
+
